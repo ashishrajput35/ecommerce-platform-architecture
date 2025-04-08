@@ -1,0 +1,24 @@
+# application.yml
+
+server:
+  port: 8761   # Port where Eureka server will run
+
+spring:
+  application:
+    name: ecommerce-service-registry  # This is the service name to register in Eureka and Unique Service Name in the network
+
+# Eureka server-specific configuration
+eureka:
+  client:
+    register-with-eureka: false # Service Registry doesn't register itself  # This service itself will not register (it's a registry)
+    fetch-registry: false  # Service Registry doesn't fetch services # No need to fetch registry as it is the server
+  server:
+    enable-self-preservation: false # For development only
+    wait-time-in-ms-when-sync-empty: 0 # No delay while starting Eureka server
+
+# Optional: To enable dashboard access
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*" # Enable all actuator endpoints
