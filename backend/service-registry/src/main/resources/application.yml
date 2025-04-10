@@ -1,11 +1,15 @@
 # application.yml
-
 server:
-  port: 8761   # Port where Eureka server will run
+  port: 8761
 
 spring:
   application:
-    name: ecommerce-service-registry  # This is the service name to register in Eureka and Unique Service Name in the network
+    name: ecommerce-service-registry  # Must match your config repo file name # This is the service name to register in Eureka and Unique Service Name in the network
+  profiles:
+    active: dev
+#  config:
+#    import: optional:configserver:http://localhost:8888  # Config Server URL
+
 
 # Eureka server-specific configuration
 eureka:
@@ -22,3 +26,4 @@ management:
     web:
       exposure:
         include: "*" # Enable all actuator endpoints
+
