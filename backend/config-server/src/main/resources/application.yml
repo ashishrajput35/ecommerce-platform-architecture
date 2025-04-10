@@ -1,0 +1,14 @@
+server:
+  port: 8888   # Standard port for Config Server
+
+spring:
+  application:
+    name: Ecommerce Config Server  # Recommended naming convention (lowercase-hyphenated)
+
+  cloud:
+    config:
+      server:
+        git:
+          uri: https://github.com/ashishrajput35/ecommerce-config-repo.git
+          default-label: dev  # branch name from config repo # Mention your branch name here
+          clone-on-start: true  # To fetch the latest config on server startup
