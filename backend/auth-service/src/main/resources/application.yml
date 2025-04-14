@@ -1,0 +1,43 @@
+server:
+  port: 8081
+
+spring:
+  application:
+    name: ecommerce-auth-service
+
+  datasource:
+    url: jdbc:mysql://localhost:3306/ecommerce_auth_db?allowPublicKeyRetrieval=true&useSSL=false
+    username: root
+    password: Root@1234
+    driver-class-name: com.mysql.cj.jdbc.Driver
+
+  jpa:
+    hibernate:
+      ddl-auto: update # You can use 'create', 'validate', or 'none' based on your environment
+    shwo-sql: true
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQLDialect
+
+  jackson:
+    serialization:
+      fail-on-empty-beans: false
+
+logging:
+  level:
+    org.springframework.security: DEBUG
+
+
+# Default: use HS256
+jwt:
+  algorithm: HS256
+  secret: 98cf207ae52536a92e140b189850b3f07858382b42337c62ad3e52167e03f2c2
+  expiration: 86400000
+
+
+# For RS256 (optional)
+#    algorithm: RS256
+#    privateKeyPath: src/main/resources/keys/private_key.der
+#    publicKeyPath: src/main/resources/keys/public_key.der
+
+debug: true
