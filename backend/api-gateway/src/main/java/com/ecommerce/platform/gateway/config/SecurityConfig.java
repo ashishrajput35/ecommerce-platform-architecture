@@ -22,7 +22,10 @@ public class SecurityConfig {
         return http
                 .csrf(csrf -> csrf.disable())  // Lambda Style Disable CSRF
                 .authorizeExchange(auth -> auth
-                        .pathMatchers("/actuator/**").permitAll()
+                        //  Public endpoints (no authentication needed)
+                        .pathMatchers("/api/v1/auth/**", "/actuator/**").permitAll()
+
+                        // Everything else requires authentication
                         .anyExchange().authenticated()
                 )
                 .addFilterAt(jwtFilter, SecurityWebFiltersOrder.AUTHENTICATION)

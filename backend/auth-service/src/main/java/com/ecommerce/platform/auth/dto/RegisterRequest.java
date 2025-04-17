@@ -32,6 +32,6 @@ public class RegisterRequest {
     @Size(min = 6, message = "Password must be at least 6 characters long")
     private String password;
 
-    Role role ; // Optional: can be null, defaulted to USER in service
+    private Role role ; // Optional: can be null, defaulted to USER in service
 
 }

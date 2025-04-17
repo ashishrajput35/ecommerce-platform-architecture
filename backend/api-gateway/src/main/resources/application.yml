@@ -1,21 +1,18 @@
-server:
-  port: 8080
-
 spring:
-  cloud:
-    gateway:
-      routes:
-        - id: order-service
-          uri: lb://order-service
-          predicates:
-            - Path=/order/**
+  application:
+    name: ecommerce-api-gateway
 
-        - id: product-service
-          uri: lb://product-service
-          predicates:
-            - Path=/product/**
+  profiles:
+    active: dev  # 🟢 Change this one to dev, uat, prod as needed
 
-eureka:
-  client:
-    service-url:
-      defaultZone: http://localhost:8761/eureka/
+  config:
+    import:
+      - optional:configserver:http://localhost:8888
+      - optional:configserver:http://localhost:8888/jwt-secrets
+
+
+
+
+
+
+

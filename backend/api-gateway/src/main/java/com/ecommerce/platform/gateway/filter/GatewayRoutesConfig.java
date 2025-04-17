@@ -9,18 +9,18 @@ import org.springframework.context.annotation.Configuration;
  * Routes Configuration
  * Maps Path → Microservice
  */
-@Configuration
+//@Configuration
 public class GatewayRoutesConfig {
 
-    @Bean
-    public RouteLocator customRoutes(RouteLocatorBuilder builder) {
-        return builder.routes()
-                .route("order-service", r -> r.path("/order/**")
-                        .uri("lb://order-service"))
-
-                .route("product-service", r -> r.path("/product/**")
-                        .uri("lb://product-service"))
-
-                .build();
-    }
+//    @Bean
+//    public RouteLocator customRoutes(RouteLocatorBuilder builder) {
+//        return builder.routes()
+//                .route("order-service", r -> r.path("/order/**")
+//                        .uri("lb://order-service"))
+//
+//                .route("product-service", r -> r.path("/product/**")
+//                        .uri("lb://product-service"))
+//
+//                .build();
+//    }
 }

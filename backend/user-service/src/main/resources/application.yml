@@ -1,0 +1,9 @@
+spring:
+  application:
+    name: ecommerce-user-service
+
+  config:
+    import: optional:configserver:http://localhost:8888
+
+  profiles:
+    active: dev # 🟢 Change this one to dev, uat, prod as needed

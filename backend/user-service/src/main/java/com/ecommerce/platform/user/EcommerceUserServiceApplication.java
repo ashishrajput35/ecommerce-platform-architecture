@@ -1,13 +1,13 @@
-package com.ecommerce.platform.auth;
+package com.ecommerce.platform.user;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class EcommerceAuthServiceApplication {
+public class EcommerceUserServiceApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(EcommerceAuthServiceApplication.class, args);
+		SpringApplication.run(EcommerceUserServiceApplication.class, args);
 	}
 
 }

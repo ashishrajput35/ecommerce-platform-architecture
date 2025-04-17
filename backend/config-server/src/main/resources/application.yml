@@ -3,7 +3,7 @@ server:
 
 spring:
   application:
-    name: Ecommerce Config Server  # Recommended naming convention (lowercase-hyphenated)
+    name: ecommerce-config-server  # Recommended naming convention (lowercase-hyphenated)
 
   cloud:
     config:
@@ -12,3 +12,4 @@ spring:
           uri: https://github.com/ashishrajput35/ecommerce-config-repo.git
           default-label: dev  # branch name from config repo # Mention your branch name here
           clone-on-start: true  # To fetch the latest config on server startup
+          search-paths: .
