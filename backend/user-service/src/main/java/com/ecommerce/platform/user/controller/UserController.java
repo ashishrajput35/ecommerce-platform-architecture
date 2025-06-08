@@ -49,7 +49,8 @@ public class UserController {
 
     }
 
-    @PutMapping("/{id}")
+//    @PutMapping("/{id}")
+    @PatchMapping("/{id}")
     @Operation(summary = "Update user by ID")
     public ResponseEntity<ApiSuccessResponse<UserDto>> updateUser(@PathVariable Long id, @Valid @RequestBody UserDto userDto) {
 //        return ResponseEntity.ok(userService.updateUser(id, userDto));
@@ -57,7 +58,8 @@ public class UserController {
         return ResponseEntity.ok(ApiResponseUtil.success(userService.updateUser(id,userDto),"Sucessfully Updated User Data",200));
     }
 
-    @PatchMapping("/{id}")
+//        @PutMapping("/{id}")
+        @PatchMapping("/patch2/{id}")
     @Operation(summary = "Partially update user by ID")
     public ResponseEntity<UserDto> partialUpdateUser(
             @PathVariable Long id,

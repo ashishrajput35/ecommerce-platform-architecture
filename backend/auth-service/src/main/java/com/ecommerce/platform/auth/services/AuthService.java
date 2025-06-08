@@ -1,5 +1,6 @@
 package com.ecommerce.platform.auth.services;
 
+import com.ecommerce.platform.auth.common.exception.custom.UserAlreadyExistsException;
 import com.ecommerce.platform.auth.dto.AuthResponse;
 import com.ecommerce.platform.auth.dto.LoginRequest;
 import com.ecommerce.platform.auth.dto.RegisterRequest;
@@ -8,6 +9,7 @@ import com.ecommerce.platform.auth.repository.UserRepository;
 import com.ecommerce.platform.auth.roles.Role;
 import com.ecommerce.platform.auth.security.jwt.JwtService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -37,27 +39,38 @@ public final class AuthService {
      */
     public AuthResponse userRegister (RegisterRequest registerRequest){
 
-        var user = User.builder()
-                .username(registerRequest.getUsername())
-                .email(registerRequest.getEmail())
-                .password(passwordEncoder.encode(registerRequest.getPassword()))
-                .role(registerRequest.getRole() != null ? registerRequest.getRole(): Role.USER) //Default role assignment if null
-                .build();
+        try {
 
-        // Persist the new user to the database
-        userRepository.save(user);
+            var user = User.builder()
+                    .username(registerRequest.getUsername())
+                    .email(registerRequest.getEmail())
+                    .password(passwordEncoder.encode(registerRequest.getPassword()))
+                    .role(registerRequest.getRole() != null ? registerRequest.getRole(): Role.USER) //Default role assignment if null
+                    .build();
 
-        // Generate JWT token using username and optional claims (empty map here)
-        var jwt = jwtService.generateToken(user.getUsername(),new HashMap<>());
+            // Persist the new user to the database
+            userRepository.save(user);
 
-        // Build response object
-        return AuthResponse.builder()
-                .token(jwt)
-                .username(user.getUsername())
-                .role(user.getRole().name())
-                .issuedAt(jwtService.extractIssuedAtMillis(jwt)) // Token issue time (can be used on client side).
-                .expiresIn(jwtService.extractExpirationMillis(jwt)) // Expiry time extracted from JWT.
-                .build();
+            // Generate JWT token using username and optional claims (empty map here)
+//            var jwt = jwtService.generateToken(user.getUsername(),new HashMap<>());
+
+            // Build response object
+            return AuthResponse.builder()
+//                    .token(jwt)
+                    .username(user.getUsername())
+                    .role(user.getRole().name())
+                    .useremail(user.getEmail())
+//                    .issuedAt(jwtService.extractIssuedAtMillis(jwt)) // Token issue time (can be used on client side).
+//                    .expiresIn(jwtService.extractExpirationMillis(jwt)) // Expiry time extracted from JWT.
+                    .build();
+
+        }catch (DataIntegrityViolationException ex) {
+            if (ex.getMessage().contains("users_details.UKmld8vik5lrt9308nbcic8me3w")) {
+                throw new UserAlreadyExistsException();
+            }
+            throw ex; // rethrow if it's a different issue
+        }
+
     }
 
     /**

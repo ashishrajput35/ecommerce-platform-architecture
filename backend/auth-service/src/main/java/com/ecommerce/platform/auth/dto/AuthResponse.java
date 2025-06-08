@@ -22,6 +22,8 @@ public class AuthResponse {
     //Username of the authenticated user
     private String username;
 
+    private String useremail;
+
     //Role of the user, e.g., USER or ADMIN
     private String role;
 

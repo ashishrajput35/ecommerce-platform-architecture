@@ -2,10 +2,12 @@ package com.ecommerce.platform.auth.config;
 
 import com.ecommerce.platform.auth.security.JwtAuthenticationFilter;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
+import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -15,6 +17,11 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.CorsConfigurationSource;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
+
+import java.util.List;
 
 /**
  * Main security configuration class responsible for setting up Spring Security for the application.
@@ -35,6 +42,9 @@ public class SecurityConfig {
     // Custom implementation of Spring Security's UserDetailsService
     private final UserDetailsService userDetailsService;
 
+    @Value("${frontend.origin}") // Inject frontend origin dynamically
+    private String frontendOrigin;
+
     /**
      * Defines the security filter chain for HTTP security.
      * - Disables CSRF (since we are using stateless JWT auth)
@@ -51,8 +61,8 @@ public class SecurityConfig {
         return http
                 // Disable CSRF (Cross-Site Request Forgery) protection for stateless APIs
                 .csrf(AbstractHttpConfigurer::disable)
-
-                // Define URL access rules
+                // Enable CORS with our custom configuration source
+//                .cors(cor -> cor.configurationSource(corsConfigurationSource()))                // Define URL access rules
                 .authorizeHttpRequests(auth -> auth
                         // Allow public access to authentication endpoints (e.g., login/register)
                         .requestMatchers("/api/v1/auth/**").permitAll() // Public endpoints
@@ -71,6 +81,21 @@ public class SecurityConfig {
 
                 .build();
     }
+
+
+//    //  Dynamic CORS configuration bean
+//    @Bean
+//    public CorsConfigurationSource corsConfigurationSource() {
+//        CorsConfiguration config = new CorsConfiguration();
+//        config.setAllowedOrigins(List.of(frontendOrigin)); // Dynamic origin
+//        config.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
+//        config.setAllowedHeaders(List.of("*"));
+//        config.setAllowCredentials(true); // Important for JWT
+//
+//        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+//        source.registerCorsConfiguration("/**", config);
+//        return source;
+//    }
 
     /**
      * Bean for password encoding.

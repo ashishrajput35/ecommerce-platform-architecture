@@ -1,6 +1,7 @@
 package com.ecommerce.platform.auth.common.exception;
 
 import com.ecommerce.platform.auth.common.exception.custom.CustomException;
+import com.ecommerce.platform.auth.common.exception.custom.UserAlreadyExistsException;
 import com.ecommerce.platform.auth.common.response.ApiErrorResponse;
 import com.ecommerce.platform.auth.util.ApiResponseUtil;
 import jakarta.validation.ConstraintViolationException;
@@ -53,6 +54,17 @@ public class GlobalExceptionHandler {
 
         return ResponseEntity.badRequest().body(
                 ApiResponseUtil.error(errors, "Constraint violation", HttpStatus.BAD_REQUEST.value())
+        );
+    }
+
+    @ExceptionHandler(UserAlreadyExistsException.class)
+    public ResponseEntity<ApiErrorResponse> handleUserAlreadyExistsException(UserAlreadyExistsException ex) {
+        return ResponseEntity.badRequest().body(
+                ApiResponseUtil.error(
+                        List.of(ex.getMessage()),
+                        "user already exist",
+                        HttpStatus.BAD_REQUEST.value()
+                )
         );
     }
 

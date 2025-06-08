@@ -1,0 +1,55 @@
+.inputDataWrapper {
+  position: relative;
+  width: 100%;
+  height: 40px;
+  margin-top: 16px;
+}
+
+.inputDataInput {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  padding-left: 8px;
+  font-size: 16px;
+  border: none;
+  outline: none;
+  box-sizing: border-box;
+  transition: all 0.3s ease;
+  background: white;
+}
+
+.inputDataLabel {
+  position: absolute;
+  bottom: 10px;
+  left: 8px;
+  color: #666;
+  background: white;
+  padding: 0 4px;
+  font-size: 14px;
+  transition: all 0.3s ease;
+  pointer-events: none;
+}
+
+.inputDataInput:focus ~ .inputDataLabel,
+.inputDataInput:valid ~ .inputDataLabel {
+  transform: translateY(-35px);
+  font-size: 14px;
+  color: #4158d0;
+}
+
+.borderAnimated {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  border: 2px solid #ccc;
+  border-radius: 12px;
+  pointer-events: none;
+  transition: border-color 0.3s ease;
+}
+
+.inputDataInput:focus ~ .borderAnimated,
+.inputDataInput:valid ~ .borderAnimated {
+  border-color: #4158d0;
+}
